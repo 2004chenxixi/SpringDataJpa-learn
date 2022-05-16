@@ -57,5 +57,13 @@ public class jpqlTest {
         System.out.println("方法命名查询之模糊查询 --> " + client);
     }
 
+    @Test
+    public void FindByNameLikeAndJob() {
+        //使用-方法命名查询--之多条件查询
+        //方法命名查询，findBy+实体类名字（首字母大写）+效果（Like模糊查询）+（连接符号and/or）+实体类名字+效果
+        List<Client> client = clientDao.findByNameLikeAndJob("老%", "混子");
+        System.out.println("方法命名查询之多条件查询 --> " + client);
+    }
+
 
 }

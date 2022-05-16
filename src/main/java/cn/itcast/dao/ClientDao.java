@@ -56,5 +56,9 @@ public interface ClientDao extends JpaRepository<Client, Integer>, JpaSpecificat
     //6.使用-方法命名查询--之模糊查询
     public List<Client> findByNameLike(String name);//方法命名查询，findBy+实体类名字（首字母大写）+效果（Like模糊查询）
 
+    //7。使用-方法命名查询--之多条件查询
+    //方法命名查询，findBy+实体类名字（首字母大写）+效果（Like模糊查询）+（连接符号and/or）+实体类名字+效果
+    public List<Client> findByNameLikeAndJob(String name, String job);
+
 
 }
