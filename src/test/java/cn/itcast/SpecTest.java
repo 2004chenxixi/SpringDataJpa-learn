@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.persistence.criteria.*;
+import java.util.List;
 import java.util.Optional;
 
 @RunWith(SpringJUnit4ClassRunner.class)//spring提供的单元测试环境
@@ -75,6 +76,23 @@ public class SpecTest {
     }
 
     //3。
+    //进行模糊查询
+    @Test
+    public void TestSpec3() {//动态-多个查询
+        Specification<Client> spec = new Specification<Client>() {
+            public Predicate toPredicate(Root<Client> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Path<Object> name = root.get("name");
+                Predicate predicate1 = cb.like(name.as(String.class), "老%");
+                /*
+                模糊查询和直接查询区别
+               cb.equal(name, "李")-----cb.like(name.as(String.class),"老%")
+                 */
+                return predicate1;
+            }
+        };
+        List<Client> client = clientDao.findAll(spec);
+        System.out.println("client --> " + client);
+    }
 
 
 }
