@@ -6,6 +6,7 @@ import cn.itcast.domain.Client;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -92,6 +93,35 @@ public class SpecTest {
         };
         List<Client> client = clientDao.findAll(spec);
         System.out.println("client --> " + client);
+    }
+
+    //4。
+    //模糊查询+结果的排序
+    @Test
+    public void TestSpec4() {//动态-多个查询
+        Specification<Client> spec = new Specification<Client>() {
+            public Predicate toPredicate(Root<Client> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Path<Object> name = root.get("name");
+                Predicate like = cb.like(name.as(String.class), "老%");
+                /*
+                模糊查询和直接查询区别
+               cb.equal(name, "李")-----cb.like(name.as(String.class),"老%")
+                 */
+                return like;
+            }
+        };
+        /*
+        添加排序
+        创建一个排序对象，需要调用构造方法实例化sort对象
+        1。第一个参数，排序的顺序（倒叙，正序）
+        sort.Direction.DESC--倒叙
+        sort.Direction.ASC--正序
+        2。第二个参数，排序的属性--需要按什么排序
+         */
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        List<Client> client = clientDao.findAll(spec, sort);
+        System.out.println("client --> " + client);
+
     }
 
 
