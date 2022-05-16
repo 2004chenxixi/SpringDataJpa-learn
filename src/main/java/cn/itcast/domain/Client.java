@@ -1,3 +1,4 @@
+//这里的Spring Data Jpa ==  Gorm ---增删改查的命令
 package cn.itcast.domain;
 //要想直接调出-get-set-toString--（command+N）
 
