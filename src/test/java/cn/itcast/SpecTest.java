@@ -25,7 +25,8 @@ public class SpecTest {
     @Autowired
     private ClientDao clientDao;
 
-    @Test
+    //1。
+    @Test//动态-单个查询
     public void TestSpec() {
         //匿名内部类
         /*
@@ -41,21 +42,41 @@ public class SpecTest {
 
                 // 1.获取比较的属性
                 Path<Object> name = root.get("name");
-                // 2. 构造查询条件  select * from cst_customer where
-                //                name = '卡布达'
+                // 2. 构造查询条件  select * from cst_customer where  name = '张三'
 
                 /**
-                 *
                  *   第一个参数：需要比较的属性（path对象）
                  *   第二个参数：当前需要比较的取值
                  */
-                Predicate predicate = cb.equal(name, "李四"); // 进行精准匹配（比较的属性，比较的属性的取值）
+                Predicate predicate = cb.equal(name, "李"); // 进行精准匹配（比较的属性，比较的属性的取值）
                 return predicate;
             }
         };
         Optional<Client> client = clientDao.findOne(spec);
         System.out.println("client --> " + client);
     }
+
+
+    //2。
+    @Test
+    public void TestSpec2() {//动态-多个查询
+        Specification<Client> spec = new Specification<Client>() {
+            public Predicate toPredicate(Root<Client> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Path<Object> name = root.get("name");
+                Path<Object> job = root.get("job");
+                Predicate predicate1 = cb.equal(name, "老东西"); // 进行精准匹配（比较的属性，比较的属性的取值）
+                Predicate predicate2 = cb.equal(job, "混子");
+                Predicate And = cb.and(predicate1, predicate2);
+                return And;
+            }
+        };
+        Optional<Client> client = clientDao.findOne(spec);
+        System.out.println("client --> " + client);
+    }
+
+    //3。
+
+
 }
 
 
