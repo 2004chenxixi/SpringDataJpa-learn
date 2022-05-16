@@ -11,6 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RunWith(SpringJUnit4ClassRunner.class)//spring提供的单元测试环境
 @ContextConfiguration(locations = "classpath:application.xml")//指定Spring容器的配置---对应到自己写的配置里面
 //有了@ContextConfiguration(locations = "classpath:application.xml")这个，就可以从里面调出刚刚配置的数据库信息
@@ -35,10 +37,25 @@ public class jpqlTest {
         System.out.println("自己写的'ID和Name查找'方法 --> " + client);
     }
 
-    @Test
+    @Test//使用jpdl--进行修改
     @Transactional//添加--事务
     @Rollback(value = false)//事务的回滚-false就是不回来，true表示回滚，那值就不会改变
     public void TestJpql2() {//根据自己写的--修改数据
         clientDao.modification(1, "我不是张三");
     }
+
+    @Test
+    public void TestFuncName() {//根据--"方法命名查询"
+        Client client = clientDao.findByName("我不是张三");
+        System.out.println("方法命名查询 --> " + client);
+    }
+
+    @Test
+    public void TestFuncNameLike() {
+        //根据--"方法命名查询"--之模糊查询,因为是模糊查询，要用集合来接，不然回爆出- query did not return a unique result: 3
+        List<Client> client = clientDao.findByNameLike("老%");
+        System.out.println("方法命名查询之模糊查询 --> " + client);
+    }
+
+
 }

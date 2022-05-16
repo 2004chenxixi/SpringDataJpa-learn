@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 /*
 SpringDataJpa--接口
 JpaRepository<T,Id>T=操作类实体类类范型，ID=实体类主键属性的类范型
@@ -28,7 +30,7 @@ public interface ClientDao extends JpaRepository<Client, Integer>, JpaSpecificat
     根据email查找---还可以写很多
     百度查--jpql的语法
      */
-    @Query(value = "select  *from Client  where email =?", nativeQuery = true)
+    @Query(value = "select  * from Client  where email =?", nativeQuery = true)
     public Client FindInformationEmail(String email);
 
 
@@ -48,7 +50,11 @@ public interface ClientDao extends JpaRepository<Client, Integer>, JpaSpecificat
     @Modifying //这个才表示--修改，@Query表示查找
     public void modification(int id, String name);
 
-    //5。
+    //5。使用-方法命名查询-
+    public Client findByName(String name);//方法命名查询，findBy+实体类名字（首字母大写）
+
+    //6.使用-方法命名查询--之模糊查询
+    public List<Client> findByNameLike(String name);//方法命名查询，findBy+实体类名字（首字母大写）+效果（Like模糊查询）
 
 
 }
