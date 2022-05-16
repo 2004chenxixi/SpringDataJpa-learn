@@ -1,5 +1,6 @@
 package cn.itcast;
 //增删该查
+//用springDataJpa自带的方法---来查找
 
 import cn.itcast.dao.ClientDao;
 import cn.itcast.domain.Client;

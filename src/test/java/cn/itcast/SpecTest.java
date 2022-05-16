@@ -1,5 +1,22 @@
 package cn.itcast;
 //这里是--动态查询--使用的是-JpaSpecificationExecutor
+//使用-下面这样的格式，来查询
+/*
+ @Test
+    public void TestSpec2() {//动态-多个查询
+        Specification<Client> spec = new Specification<Client>() {
+            public Predicate toPredicate(Root<Client> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Path<Object> name = root.get("name");
+                Path<Object> job = root.get("job");
+                Predicate predicate1 = cb.equal(name, "老东西"); // 进行精准匹配（比较的属性，比较的属性的取值）
+                Predicate predicate2 = cb.equal(job, "混子");
+                Predicate And = cb.and(predicate1, predicate2);
+                return And;
+            }
+        };
+        Optional<Client> client = clientDao.findOne(spec);
+        System.out.println("client --> " + client);
+ */
 
 import cn.itcast.dao.ClientDao;
 import cn.itcast.domain.Client;

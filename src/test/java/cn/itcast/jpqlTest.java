@@ -1,5 +1,6 @@
 package cn.itcast;
 //测试自己写的方法
+//自己使用jpql，sql来写方法---实现增删改查，一般在只带的方法没有的时候，再自己写
 
 import cn.itcast.dao.ClientDao;
 import cn.itcast.domain.Client;
