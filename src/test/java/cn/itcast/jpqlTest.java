@@ -6,8 +6,10 @@ import cn.itcast.domain.Client;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)//spring提供的单元测试环境
 @ContextConfiguration(locations = "classpath:application.xml")//指定Spring容器的配置---对应到自己写的配置里面
@@ -34,4 +36,9 @@ public class jpqlTest {
     }
 
     @Test
+    @Transactional//添加--事务
+    @Rollback(value = false)//事务的回滚-false就是不回来，true表示回滚，那值就不会改变
+    public void TestJpql2() {//根据自己写的--修改数据
+        clientDao.modification(1, "我不是张三");
+    }
 }
