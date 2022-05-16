@@ -22,10 +22,16 @@ public class jpqlTest {
     private ClientDao clientDao;
 
     @Test
-    public void TestJpql() {
+    public void TestJpql() {//根据自己写的--name查找
         Client client = clientDao.OneselfFuncFindName("老六");
         System.out.println("自己写的'查找'方法 --> " + client);
     }
 
+    @Test
+    public void TestJpql1() {//根据自己写的--name和id查找
+        Client client = clientDao.FindNameAndId("张三", 1);
+        System.out.println("自己写的'ID和Name查找'方法 --> " + client);
+    }
 
+    @Test
 }
