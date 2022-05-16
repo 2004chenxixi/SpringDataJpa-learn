@@ -6,6 +6,9 @@ import cn.itcast.domain.Client;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.ContextConfiguration;
@@ -121,7 +124,28 @@ public class SpecTest {
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
         List<Client> client = clientDao.findAll(spec, sort);
         System.out.println("client --> " + client);
+    }
 
+    //5.--分页
+    /*
+    分页
+    findAll（Specification，Pageable）：带有条件的分页
+    findAll（Pageable）：没有条件的分页
+     */
+    @Test
+    public void TestSpec5() {
+        Specification spec = null;
+        /*
+        PageRequest 是Pageable是Pageable接口的实现类
+        PageRequest--要传入两个参数
+        第一个参数：当前页（0表示第一页）
+        第二个参数：每页查询的数字
+         */
+        Pageable pageable = PageRequest.of(0, 2);
+        Page<Client> all = clientDao.findAll((Specification<Client>) null, pageable);
+        System.out.println("得到数据集合列表 -->" + all.getContent());
+        System.out.println("得到总条数 -->" + all.getTotalElements());
+        System.out.println("得到总页数 -->" + all.getTotalPages());
     }
 
 
